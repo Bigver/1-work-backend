@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+mport mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
   {
@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     resetToken: { type: String },
     isAdmin: { type: Boolean, default: false, required: true },
+    learn: [String]
   },
   {
     timestamps: true,
