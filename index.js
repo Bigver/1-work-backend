@@ -20,7 +20,7 @@ mongoose
   });
 
 
-const port = 3000;
+const port = process.env.PORT || 8000;
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -30,6 +30,7 @@ app.use("/api/post", actionrRouter);
 app.use("/api/upload", uploadRouter);
 
 
-app.listen(port, () => {
+
+  app.listen(port, "0.0.0.0", function () {
     console.log(`Server is running on port ${port}`);
   });

@@ -11,6 +11,8 @@ actionRouter.get('/', async (req, res) => {
   res.send(actions);
 });
 
+
+
 actionRouter.get('/:id', async (req, res) => {
   const action = await Action.findById(req.params.id);
   if (action) {
@@ -62,6 +64,30 @@ actionRouter.post(
       }
     })
   );
+
+  actionRouter.put(
+    '/learn/:id',
+    isAuth,
+    isAdmin,
+    expressAsyncHandler(async (req, res) => {
+      const actionId = req.params.id;
+      const acction = await Action.findById(actionId);
+      if (acction) {
+        acction.action = req.body.action,
+        acction.slug =  req.body.slug,
+        acction.detail =  req.body.detail,
+        acction.practice = req.body.practice,
+        acction.img = req.body.img,
+        acction.vdo = req.body.vdo,
+
+        await acction.save();
+        res.send({ message: 'Action Updated' });
+      } else {
+        res.status(404).send({ message: 'Action Not Found' });
+      }
+    })
+  );
+
 
 
  actionRouter.delete(
