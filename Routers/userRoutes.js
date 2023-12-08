@@ -19,8 +19,6 @@ userRouter.get(
 
 userRouter.get(
   '/:id',
-  isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
     if (user) {
@@ -56,6 +54,22 @@ userRouter.put(
     }
   })
 );
+
+
+userRouter.put(
+  '/learn/:id',
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    if (user) {
+     user.learn = req.body.learn
+      await user.save();
+      res.send({ message: 'User Updated' });
+    } else {
+      res.status(404).send({ message: 'Action Not Found' });
+    }
+  })
+);
+
 
 userRouter.post(
   '/forget-password',
@@ -145,6 +159,7 @@ userRouter.post(
           name: user.name,
           email: user.email,
           isAdmin: user.isAdmin,
+          learn: user.learn,
           token: generateToken(user),
         });
         return;
